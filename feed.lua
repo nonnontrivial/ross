@@ -30,7 +30,6 @@ function Feed:getPubData(itemBlock)
         local day, month, year, hour, min, sec = date:match(
             "(%d+)%s+(%a+)%s+(%d+)%s+(%d+):(%d+):(%d+)"
         )
-        print("parsed " .. date .. " as " .. day .. month .. year .. hour .. min .. sec)
         local months = { Jan = 1, Feb = 2, Mar = 3, Apr = 4, May = 5, Jun = 6, Jul = 7, Aug = 8, Sep = 9, Oct = 10, Nov = 11, Dec = 12 }
         local timeTable = {
             year = tonumber(year),
@@ -40,7 +39,6 @@ function Feed:getPubData(itemBlock)
             min = tonumber(min),
             sec = tonumber(sec)
         }
-        print("it has unixtime " .. os.time(timeTable))
         return os.time(timeTable)
     end
     return toUnixTime(pubDate)
