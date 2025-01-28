@@ -1,8 +1,8 @@
 # Ross
 
-https://github.com/user-attachments/assets/d9468512-f116-4321-9b81-e73bef2121b3
-
 keyboard-driven RSS reader for macOS.
+
+https://github.com/user-attachments/assets/d9468512-f116-4321-9b81-e73bef2121b3
 
 ## install
 
