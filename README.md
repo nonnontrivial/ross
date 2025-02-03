@@ -4,9 +4,16 @@ keyboard-driven RSS reader for macOS.
 
 https://github.com/user-attachments/assets/d9468512-f116-4321-9b81-e73bef2121b3
 
+## known issues
+
+- [ ] will only support continuous polling when single feed is defined
+
 ## install
 
 > n.b. assumes you have [hammerspoon](https://www.hammerspoon.org) installed.
+
+> n.b. [hammerspoon timer](https://www.hammerspoon.org/docs/hs.timer.html) uses a macOS API which will pause on sleep; accounting for this remains an open issue
+
 
 - clone this repo
 - move it to `~/.hammerspoon/Spoons/Ross.spoon`
@@ -22,11 +29,7 @@ hs.loadSpoon("Ross"):bindHotKeys({
 ```toml
 [hackernews]
 url = "https://hnrss.org/frontpage"
-poll = 300 # seconds
-
-[github]
-url = "https://github.blog/feed/"
-poll = 300 # seconds
+poll = 120 # seconds
 
 ```
 - reload your hammerspoon config

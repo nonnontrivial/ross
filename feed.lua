@@ -74,7 +74,7 @@ function Feed:poll(onRSSData)
             error("got " .. status .. " from " .. self.url)
         end
         if not body then
-            error("got empty response body")
+            error("got empty response body!")
         end
         self.data = self:parseRSSBody(body)
         onRSSData(self.data)

@@ -54,9 +54,10 @@ function Ross:start()
     local toml = Toml:new()
     local config = toml:parse(hs.spoons.resourcePath("./config.toml"))
 
-    for _, data in pairs(config) do
+    for section, data in pairs(config) do
         local feed = Feed:new(data.url, data.poll)
         feed:poll(function(parsedRSSBody)
+            print("updating feed with new data from " .. section)
             self:updateFeedData(data.url, parsedRSSBody)
             self:updateChoices()
         end)
