@@ -7,6 +7,7 @@ https://github.com/user-attachments/assets/d9468512-f116-4321-9b81-e73bef2121b3
 ## known issues
 
 - [ ] will only support continuous polling when single feed is defined
+- [ ] poll will stop when machine sleeps
 
 ## install
 
