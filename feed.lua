@@ -1,7 +1,7 @@
 local Feed = {}
 
-function Feed:new(url, pollingIntervalSeconds)
-    local instance = { url = url, interval = pollingIntervalSeconds, data = {} }
+function Feed:new(url)
+    local instance = { url = url, data = {} }
     setmetatable(instance, self)
     self.__index = self
     return instance
@@ -66,21 +66,16 @@ function Feed:parseRSSBody(rss)
     }
 end
 
-function Feed:poll(onRSSData)
-    local function getRSSData()
-        print("fetching RSS feed from " .. self.url)
-        local status, body, headers = hs.http.get(self.url)
-        if status ~= 200 then
-            error("got " .. status .. " from " .. self.url)
-        end
-        if not body then
-            error("got empty response body!")
-        end
-        self.data = self:parseRSSBody(body)
-        onRSSData(self.data)
+function Feed:getData()
+    print("fetching RSS feed from " .. self.url)
+    local status, body, headers = hs.http.get(self.url)
+    if status ~= 200 then
+        error("got " .. status .. " from " .. self.url)
     end
-    getRSSData()
-    hs.timer.new(self.interval, getRSSData):start()
+    if not body then
+        error("got empty response body from " .. self.url)
+    end
+    return self:parseRSSBody(body)
 end
 
 return Feed

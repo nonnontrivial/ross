@@ -3,10 +3,11 @@ local Feed = dofile(hs.spoons.resourcePath("feed.lua"))
 
 local Ross = {
     name = "Ross",
-    version = "0.1.0",
+    version = "0.2.0",
     author = "Kevin Donahue <nonnontrivial@gmail.com>",
     license = "https://opensource.org/license/mit",
 
+    config = nil,
     chooser = nil,
     showingChooser = false,
     rssFeeds = {}
@@ -50,27 +51,25 @@ end
 
 function Ross:start()
     self:setupChooser()
-
     local toml = Toml:new()
-    local config = toml:parse(hs.spoons.resourcePath("./config.toml"))
-
-    for section, data in pairs(config) do
-        local feed = Feed:new(data.url, data.poll)
-        feed:poll(function(parsedRSSBody)
-            print("updating feed with new data from " .. section)
-            self:updateFeedData(data.url, parsedRSSBody)
-            self:updateChoices()
-        end)
-    end
+    local configPath = hs.spoons.resourcePath("./config.toml")
+    self.config = toml:parse(configPath)
 end
 
-function Ross:showReader()
+function Ross:show()
+    for section, data in pairs(self.config) do
+        local feed = Feed:new(data.url)
+        local parsedRSSBody = feed:getData()
+        print("updating feed with new data from " .. section)
+        self:updateFeedData(data.url, parsedRSSBody)
+        self:updateChoices()
+    end
     self.chooser:show()
 end
 
 function Ross:bindHotKeys(mapping)
     local spec = {
-        showReader = hs.fnutils.partial(self.showReader, self),
+        showReader = hs.fnutils.partial(self.show, self),
     }
     hs.spoons.bindHotkeysToSpec(spec, mapping)
     return self
